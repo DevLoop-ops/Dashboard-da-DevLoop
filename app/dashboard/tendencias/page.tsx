@@ -208,34 +208,30 @@ export default function TendenciasPage() {
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="noticias" className="mt-0 border-t pt-4">
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {isLoading
-                  ? Array(6)
-                      .fill(0)
-                      .map((_, i) => (
-                        <div key={i} className="space-y-3">
-                          <Skeleton className="h-[180px] w-full rounded-xl" />
-                          <div className="space-y-2">
-                            <Skeleton className="h-4 w-full" />
-                            <Skeleton className="h-4 w-5/6" />
-                          </div>
-                        </div>
-                      ))
-                  : techNews?.map((news, index) => <TechNewsCard key={index} news={news} />)}
-              </div>
+            <TabsContent value="noticias">
+              {isLoading ? (
+                <div className="space-y-4">
+                  {Array(3)
+                    .fill(0)
+                    .map((_, i) => (
+                      <Card key={i}>
+                        <CardHeader className="pb-2">
+                          <Skeleton className="h-5 w-1/2 mb-1" />
+                          <Skeleton className="h-4 w-3/4" />
+                        </CardHeader>
+                        <CardContent>
+                          <Skeleton className="h-20 w-full" />
+                        </CardContent>
+                      </Card>
+                    ))}
+                </div>
+              ) : (
+                <TechNewsCard news={techNews} />
+              )}
             </TabsContent>
 
-            <TabsContent value="visualizacao" className="mt-0 border-t pt-4">
-              <div className="h-[500px]">
-                {isLoading ? (
-                  <div className="flex h-full items-center justify-center">
-                    <Skeleton className="h-[90%] w-[95%] rounded-xl" />
-                  </div>
-                ) : (
-                  <TrendVisualization data={trendingTopics || []} />
-                )}
-              </div>
+            <TabsContent value="visualizacao">
+              <TrendVisualization trendingTopics={trendingTopics} />
             </TabsContent>
 
             <TabsContent value="analiseIA" className="mt-0 border-t pt-4">
